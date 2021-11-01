@@ -8,10 +8,22 @@
 import Foundation
 
 class User{
-    var name = "admin"
-    var password: String = "123"
-    var age: Int = 32
-    var info: String = "There should be info about me"
+    var name = ""
+    var password = ""
+    var age = 0
+    var info = ""
+    
+    
+    static func getUser() -> User{
+        let user:User = User()
+        
+        user.name = "admin"
+        user.password = "123"
+        user.age = 32
+        user.info = "There should be info about me"
+        
+        return user
+    }
 }
 
 

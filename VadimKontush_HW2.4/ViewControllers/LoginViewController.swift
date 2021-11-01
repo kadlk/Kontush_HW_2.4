@@ -12,7 +12,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet var usernameTFOutlet: UITextField!
     @IBOutlet var passwordTFOutlet: UITextField!
     
-    let user: User = User()
+    let user = User.getUser()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +21,18 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let tabBarController = segue.destination as? UITabBarController else {return}
+        guard let tabBarController = segue.destination as? UITabBarController else { return }
+        guard let viewControllers = tabBarController.viewControllers else { return }
         
-        guard let tabBarControllers = tabBarController.viewControllers else {return}
-        
-        for controller in tabBarControllers {
-            switch controller {
-            case is WelcomeViewController:
-                let destController = controller as! WelcomeViewController
-                destController.userName = user.name
-            
-            case is UINavigationController:
-                let navigationController = controller as? UINavigationController
-                guard let destController = navigationController?.topViewController as? InfoNavController else { return }
-                destController.info = user.info
-            default:
-                break
+        for controller in viewControllers{
+            if let welcomeViewController = controller as? WelcomeViewController{
+                welcomeViewController.userName = user.name
+            }
+            if let navigationController = controller as? UINavigationController{
+                let infoNavController = navigationController.topViewController as! InfoNavController
+//                infoNavController.info = user.info
+//                infoNavController.userName = user.name
+                infoNavController.user = user
             }
         }
     }

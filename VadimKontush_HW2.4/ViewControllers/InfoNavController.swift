@@ -8,16 +8,24 @@
 import Foundation
 import UIKit
 
-class InfoNavController:UINavigationController{
+class InfoNavController:UIViewController{
     
     @IBOutlet var infoLabelOutlet: UILabel!
+    @IBOutlet var bottomNavigationItemOutlet: UINavigationItem!
     
-    var info = ""
+    @IBOutlet var topBarButtonOutlet: UIBarButtonItem!
+    
+    var user: User = User();
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        infoLabelOutlet.text = "This is info: \(info)"
-        
-        
+        infoLabelOutlet.text = "This is info: \(user.info)"
+        topBarButtonOutlet.title = user.name
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let welcomeVC = segue.destination as? WelcomeViewController else { return }
+        
+        welcomeVC.userName = user.name
+       }
 }
